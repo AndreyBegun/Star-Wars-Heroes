@@ -2,7 +2,7 @@
 
 ## How to run App Localy
 1) git clone
-2) cd starwars
+2) cd Star-Wars-Heroes
 3) npm install
 4) npm run start
 5) go to  http://localhost:3000 in your brouser
