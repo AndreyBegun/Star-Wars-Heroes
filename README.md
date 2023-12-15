@@ -8,7 +8,7 @@
 5) go to  http://localhost:3000 in your brouser
 note: you must have pre-installed node.js latest version
 
-Test task for React engineer 
+## Test task for React engineer 
  
 Используя Star Wars API (https://swapi.dev/) в качестве источника данных, реализовать SPA приложение React и Typescript, 
 состоящее из двух страниц.
