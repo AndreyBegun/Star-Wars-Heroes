@@ -1,0 +1,19 @@
+.root {
+    display: flex;
+    background-color: aliceblue;
+    width: -webkit-fill-available;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.title {
+    min-width: 35%;
+}
+
+.value {
+    min-width: 40%;
+}
+
+.value:hover {
+    cursor: pointer;
+}
