@@ -4,12 +4,13 @@ import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import debounce from 'lodash.debounce';
+import { SEARCH_DELAY } from '../../constants';
 
 interface SearchFieldProps {
     onSearch: React.Dispatch<React.SetStateAction<string>>,
+    isLoading: boolean
 }
 
-const SEARCH_DELAY = 500;
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -56,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchField(props: SearchFieldProps) {
-    const { onSearch } = props;
+    const { onSearch, isLoading } = props;
 
     const [searchedName, setSearchedName] = useState('')
 
@@ -67,8 +68,8 @@ export default function SearchField(props: SearchFieldProps) {
     }, []);
 
     useEffect(() => {
-        onSearch(`https://swapi.dev/api/people?search=${searchedName}`)
-    }, [searchedName])
+        onSearch(searchedName)
+    }, [onSearch, searchedName])
 
     useEffect(() => {
         return () => {
@@ -85,6 +86,7 @@ export default function SearchField(props: SearchFieldProps) {
                 <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
+                    disabled={isLoading}
                     onChange={searchDelayed}
                 />
             </Search>

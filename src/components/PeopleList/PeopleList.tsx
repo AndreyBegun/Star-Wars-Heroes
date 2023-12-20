@@ -11,6 +11,7 @@ import { Grid, Link } from '@mui/material';
 import Pagination from '../Pagination/Pagination';
 import Loader from '../Loader/Loader';
 import SearchField from '../SearchField/SearchField';
+import { BASE_URL } from '../../constants';
 
 type People = {
     name: string,
@@ -21,18 +22,24 @@ type People = {
     height: string,
     url: string,
 }
+export type Value = string | null | undefined
+
+
 export default function PeopleList() {
 
-    const [url, setUrl] = useState(`https://swapi.dev/api/people`)
+    const [searchParam, setSearchParam] = useState('')
+    const [pageParam, setPageParam] = useState<Value>('1')
     const [nextUrl, setNextUrl] = useState(null)
     const [prevUrl, setPrevUrl] = useState(null)
-    const [peopleList, setPeopleList] = useState([] as People[])
+    const [peopleList, setPeopleList] = useState<People[]>([])
     const [loading, setLoading] = useState(false)
 
 
     useEffect(() => {
         setLoading(true)
-        axios.get(url)
+        axios.get(BASE_URL, {
+            params: { search: searchParam, page: pageParam }
+        })
             .then(function (response) {
                 setPeopleList(response.data.results)
                 setNextUrl(response.data.next)
@@ -42,7 +49,7 @@ export default function PeopleList() {
 
             })
 
-    }, [url])
+    }, [searchParam, pageParam])
 
     const getIdFromUrl = (url: string) => {
         const urlArray = url.split('/')
@@ -52,7 +59,7 @@ export default function PeopleList() {
 
     return (
         <Grid container data-testid="people-list">
-            <SearchField onSearch={setUrl} />
+            <SearchField onSearch={setSearchParam} isLoading={loading} />
             <TableContainer component={Paper} >
 
                 <Loader isLoading={loading} />
@@ -88,7 +95,7 @@ export default function PeopleList() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Pagination next={nextUrl} previous={prevUrl} onButtonClick={setUrl} />
+            <Pagination next={nextUrl} previous={prevUrl} onButtonClick={setPageParam} />
         </Grid>
     );
 }
