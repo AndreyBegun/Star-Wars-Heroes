@@ -36,9 +36,12 @@ export default function PeopleList() {
 
 
     useEffect(() => {
+        let controller = new AbortController()
+        let signal = controller.signal
         setLoading(true)
         axios.get(BASE_URL, {
-            params: { search: searchParam, page: pageParam }
+            params: { search: searchParam, page: pageParam },
+            signal: signal
         })
             .then(function (response) {
                 setPeopleList(response.data.results)
@@ -48,6 +51,12 @@ export default function PeopleList() {
                 setLoading(false)
 
             })
+            .catch((e) => {
+                if (axios.isCancel(e)) {
+                    console.error('Operation canceled');
+                }
+            })
+        return () => controller.abort()
 
     }, [searchParam, pageParam])
 
@@ -59,7 +68,7 @@ export default function PeopleList() {
 
     return (
         <Grid container data-testid="people-list">
-            <SearchField onSearch={setSearchParam} isLoading={loading} />
+            <SearchField onSearch={setSearchParam} />
             <TableContainer component={Paper} >
 
                 <Loader isLoading={loading} />

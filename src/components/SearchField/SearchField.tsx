@@ -8,7 +8,6 @@ import { SEARCH_DELAY } from '../../constants';
 
 interface SearchFieldProps {
     onSearch: React.Dispatch<React.SetStateAction<string>>,
-    isLoading: boolean
 }
 
 
@@ -57,7 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchField(props: SearchFieldProps) {
-    const { onSearch, isLoading } = props;
+    const { onSearch } = props;
 
     const [searchedName, setSearchedName] = useState('')
 
@@ -86,7 +85,6 @@ export default function SearchField(props: SearchFieldProps) {
                 <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
-                    disabled={isLoading}
                     onChange={searchDelayed}
                 />
             </Search>

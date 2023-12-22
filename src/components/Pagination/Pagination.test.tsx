@@ -57,18 +57,18 @@ describe('Pagination', () => {
     });
 
     it('calls onButtonClick with the correct URL when buttons are clicked', () => {
-        const previous = '/previous';
-        const next = '/next';
+        const previous = '/people/?search=&page=1';
+        const next = '/people/?search=&page=2';
         const onButtonClick = jest.fn();
 
         render(<Pagination previous={previous} next={next} onButtonClick={onButtonClick} />);
 
         // Click the previous button
         fireEvent.click(screen.getByText('previous page'));
-        expect(onButtonClick).toHaveBeenCalledWith(previous);
+        expect(onButtonClick).toHaveBeenCalledWith('1');
 
         // Click the next button
         fireEvent.click(screen.getByText('next page'));
-        expect(onButtonClick).toHaveBeenCalledWith(next);
+        expect(onButtonClick).toHaveBeenCalledWith('2');
     });
 });

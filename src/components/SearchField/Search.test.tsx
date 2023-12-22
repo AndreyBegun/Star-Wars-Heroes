@@ -22,7 +22,7 @@ describe('SearchField Component', () => {
 
         // Wait for the debounce to be invoked
         await waitFor(() => {
-            expect(onSearchMock).toHaveBeenCalledWith('https://swapi.dev/api/people?search=Luke');
+            expect(onSearchMock).toHaveBeenCalledWith('Luke');
         });
     });
     it('debounces search input changes', async () => {
@@ -42,7 +42,7 @@ describe('SearchField Component', () => {
         // Wait for the debounce
         await waitFor(() => {
             // Expect only the last value to be called due to debounce
-            expect(onSearchMock).toHaveBeenCalledWith('https://swapi.dev/api/people?search=Han');
+            expect(onSearchMock).toHaveBeenCalledWith('Han');
         });
     });
 });
